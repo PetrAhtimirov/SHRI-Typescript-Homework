@@ -1,7 +1,9 @@
 import { clampToLength, emptyDisplays, randomItem } from './utils';
-import { stringToDisplay } from './view';
-const DEFAULT_VIEW_OPTIONS = { convertToUpperCase: true };
-export function marquee(input, displayAmount = input.length, options = DEFAULT_VIEW_OPTIONS) {
+import { Options, stringToDisplay } from './view';
+
+const DEFAULT_VIEW_OPTIONS: Options = { convertToUpperCase: true };
+
+export function marquee(input: string, displayAmount: number = input.length, options = DEFAULT_VIEW_OPTIONS) {
   const frames = [];
   for (let i = displayAmount - 1; i >= Math.min(0, displayAmount - input.length); i -= 1) {
     const leftPad = Math.max(0, i);
@@ -13,7 +15,8 @@ export function marquee(input, displayAmount = input.length, options = DEFAULT_V
   }
   return frames;
 }
-export function blink(input, counts = 10, options = DEFAULT_VIEW_OPTIONS) {
+
+export function blink(input: string, counts: number = 10, options = DEFAULT_VIEW_OPTIONS) {
   const frames = [];
   const empty = emptyDisplays(input.length);
   const text = stringToDisplay(input, options);
@@ -22,7 +25,8 @@ export function blink(input, counts = 10, options = DEFAULT_VIEW_OPTIONS) {
   }
   return frames;
 }
-export function typing(input, options = DEFAULT_VIEW_OPTIONS) {
+
+export function typing(input: string, options = DEFAULT_VIEW_OPTIONS) {
   const frames = [];
   const text = stringToDisplay(input, options);
   for (let i = 0; i < input.length; i++) {
@@ -30,7 +34,8 @@ export function typing(input, options = DEFAULT_VIEW_OPTIONS) {
   }
   return frames;
 }
-export function mix(input, options = DEFAULT_VIEW_OPTIONS) {
+
+export function mix(input: string, options = DEFAULT_VIEW_OPTIONS) {
   const frames = [];
   const text = stringToDisplay(input, options);
   const indexes = new Set(Array.from({ length: input.length }, (_, i) => i));

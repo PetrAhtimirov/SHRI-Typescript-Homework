@@ -1,6 +1,12 @@
-import { segmentNames } from './model';
+import { SegmentBlock, SegmentLine, segmentNames } from './model';
 import { clampToLength } from './utils';
-export function transition(from, to, animateDisplay, animateDisplayOptions) {
+
+export function transition(
+  from: SegmentLine,
+  to: SegmentLine,
+  animateDisplay: TransitionFn,
+  animateDisplayOptions?: TransitionOptions,
+) {
   from = clampToLength(from, to.length);
   const displayFrames = from.map((startDisplayState, i) => {
     return animateDisplay(startDisplayState, to[i], animateDisplayOptions);
@@ -12,7 +18,14 @@ export function transition(from, to, animateDisplay, animateDisplayOptions) {
   }
   return frames;
 }
-export function segmentBySegment(from, to, options) {
+
+type TransitionOptions = {
+  dense?: boolean;
+}
+
+type TransitionFn = (from: SegmentBlock, to: SegmentBlock, options?: TransitionOptions) => SegmentLine
+
+export function segmentBySegment(from: SegmentBlock, to: SegmentBlock, options: TransitionOptions): SegmentLine {
   const curState = new Set(from);
   const toState = new Set(to);
   const res = [[...curState]];
@@ -30,12 +43,14 @@ export function segmentBySegment(from, to, options) {
   }
   return res;
 }
+
 const layers = [
   ['a', 'b', 'c', 'd', 'e', 'f'],
   ['h', 'j', 'k', 'm'],
   ['i', 'l', 'g1', 'g2'],
-];
-export function layerByLayer(from, to) {
+] satisfies Array<SegmentBlock>;
+
+export function layerByLayer(from: SegmentBlock, to: SegmentBlock): SegmentLine {
   const curState = new Set(from);
   const toState = new Set(to);
   const res = [[...curState]];

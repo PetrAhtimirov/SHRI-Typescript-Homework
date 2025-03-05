@@ -1,4 +1,10 @@
-export const segmentNames = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm'];
+export const segmentNames = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm'] as const;
+
+export type SegmentNames = typeof segmentNames;
+export type SegmentName = SegmentNames[number];
+export type SegmentBlock = [SegmentName, ...SegmentName[]] | SegmentName[] | [];
+export type SegmentLine = SegmentBlock[];
+
 export const segmentCodes = {
   '0': ['a', 'b', 'c', 'd', 'e', 'f', 'j', 'k'],
   '1': ['b', 'c', 'j'],
@@ -36,4 +42,7 @@ export const segmentCodes = {
   X: ['h', 'j', 'k', 'm'],
   Y: ['h', 'j', 'l'],
   Z: ['a', 'd', 'j', 'k'],
-};
+} satisfies Record<string, SegmentBlock>;
+
+export type SegmentCodes = typeof segmentCodes;
+export type KnownChar = keyof SegmentCodes;

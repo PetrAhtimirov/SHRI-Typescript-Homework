@@ -17,6 +17,7 @@ const domOptions = {
   className: 'display',
   templateId: 'segmentImage',
 };
+
 const getImage = imageCreator('segmentImage');
 checkNonNullable(getImage);
 const startAnimation = initAnimation(domOptions);
